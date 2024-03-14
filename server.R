@@ -34,12 +34,20 @@ function(input, output, session) {
     # }), input$run)
 
     output$outText <- renderUI({
+      est <- estimate()
+      est.col <- switch(as.character(cut(est, breaks = c(-Inf, 0.25, 0.50, 0.75, Inf))),
+             "(-Inf,0.25]" = "#1fde18", 
+             "(0.25,0.5]" = "#eded47",
+             "(0.5,0.75]" = "#f0ad30",
+             "(0.75, Inf]" = "#f04630")
       HTML(sprintf("The estimated risk of true skeletal metastases for a prostate cancer patients exhibiting [18F]PSMA-1007 bone focal uptakes with an 
-              HUmean of %.1f and a SUVmax of %s is:</br><h3>%.1f%%</h3></br></br>
-                   <p>For citation purposes, please reference ...</p>", 
+              HUmean of %.1f and a SUVmax of %s is:</br>
+              <div style='text-align: center; margin:10px'><h1 style='color:%s'>%.1f%%</h3></div>
+              </br></br><p>For citation purposes, please reference ...</p>", 
               input$HUmean,
               input$SUVmax,
-              estimate()*100))
+              est.col,
+              est*100))
     })
     
     observe({
@@ -50,26 +58,26 @@ function(input, output, session) {
       }
     })
 
-    # # force inrange values
-    # observeEvent(input$HUmean, {
-    #   if (!is.na(input$HUmean)) {
-    #     if (input$HUmean > 400) {
-    #       updateNumericInput(session = session, "HUmean", value = 400)
-    #     }
-    #     if (input$HUmean < 0) {
-    #       updateNumericInput(session = session, "HUmean", value = 0)
-    #     }
-    #   }
-    # })
-    # 
-    # observeEvent(input$SUVmax, {
-    #   if (!is.na(input$SUVmax)) {
-    #     if (input$SUVmax > 2000) {
-    #       updateNumericInput(session = session, "SUVmax", value = 2000)
-    #     }
-    #     if (input$SUVmax < -1000) {
-    #       updateNumericInput(session = session, "SUVmax", value = -1000)
-    #     }
-    #   }
-    # })
+    # force inrange values
+    observeEvent(input$HUmean, {
+      if (!is.na(input$HUmean)) {
+        if (input$HUmean > 2000) {
+          updateNumericInput(session = session, "HUmean", value = 2000)
+        }
+        if (input$HUmean < 0) {
+          updateNumericInput(session = session, "HUmean", value = 0)
+        }
+      }
+    })
+
+    observeEvent(input$SUVmax, {
+      if (!is.na(input$SUVmax)) {
+        if (input$SUVmax > 400) {
+          updateNumericInput(session = session, "SUVmax", value = 400)
+        }
+        if (input$SUVmax < -1000) {
+          updateNumericInput(session = session, "SUVmax", value = -1000)
+        }
+      }
+    })
 }
