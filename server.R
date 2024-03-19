@@ -42,8 +42,9 @@ function(input, output, session) {
              "(0.75, Inf]" = "#f04630")
       HTML(sprintf("The estimated risk of true skeletal metastases for a prostate cancer patients exhibiting [18F]PSMA-1007 bone focal uptakes with an 
               HUmean of %.1f and a SUVmax of %s is:</br>
-              <div style='text-align: center; margin:10px'><h1 style='color:%s'>%.1f%%</h3></div>
-              </br></br><p>For citation purposes, please reference ...</p>", 
+              <div style='text-align: center; margin:10px;'><h1 style='background-color:%s; font-size:80px'>%.1f%%</h1></div>
+              </br></br>
+                   <p style = 'text-align: center; color: #666'><i>This model is provided exclusively for educational, training, and informational purposes.<br>It is not intended to support medical decision-making or to provide medical or diagnostic services.</i></p>", 
               input$HUmean,
               input$SUVmax,
               est.col,
