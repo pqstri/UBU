@@ -2,21 +2,31 @@ library(shiny)
 library(shinyjs)
 
 # Define UI for application that draws a histogram
-fluidPage(
+fluidPage(id = 'main',
+          tags$style('#main {background-color: #fff;}'),
+          
   useShinyjs(),
   
-  # Application title
-  titlePanel("Bone Uptake Metastatic Probability (BUMP) score"),
-  
-  HTML("<p>This is an online skeletal metastases risk score calculator for prostate cancer patients exhibiting [18F]PSMA-1007 bone focal uptakes.
-    Risks are calculated as presented in the paper:</br>
-    <i>Composite prediction score to interpret bone focal uptakes in hormone-sensitive
-prostate cancer patients imaged with [18F]PSMA-1007 PET/CT...</i></br> ... </p>"
+  HTML('<h1>Bone Uptake Metastatic Probability (BUMP) score</h1>
+      <p>
+       This is a free, accessible webpage offering the BUMP risk score calculator.
+       The Bone Uptake Metastatic Probability (BUMP) score calculator generates
+       the probability of bone metastasis by integrating clinical and imaging data. 
+       It is designed for prostate cancer patients exhibiting [18F]PSMA-1007 bone 
+       focal uptakes on PET/CT imaging. 
+       The risk calculations are based on the methodology presented in the
+       "Composite Prediction Score to Interpret Bone Focal Uptakes in 
+       Hormone-Sensitive Prostate Cancer Patients Imaged with 
+       [18F]PSMA-1007 PET/CT" paper. 
+       The score achieved an AUC of 0.8656. 
+       This AUC was validated through 10-fold internal cross-validation, 
+       obtaining an AUC equal to 0.8707 (95% CI: 0.8326-0.9030).
+       </p><br>'
   ),
   
   # Sidebar with a slider input for number of bins
   sidebarLayout(
-    sidebarPanel(
+    sidebarPanel(id = 'form', width = 5,
       h4("Androgen-deprivation therapy"),
       HTML("at the time of PET/CT"),
       selectInput(
@@ -58,7 +68,17 @@ prostate cancer patients imaged with [18F]PSMA-1007 PET/CT...</i></br> ... </p>"
       #                  onclick = "location.href='#outText';")
       # )
     ),
+    
     # Show a plot of the generated distribution
-    mainPanel(htmlOutput("outText"))
-  )
+    mainPanel(width = 7, htmlOutput("outText"))
+  ),
+  HTML('
+      <footer style = "text-align: center; background-color: #fff; padding: 30px">
+        <p>For information, refer to Matteo Bauckneht, MD, PhD, IRCCS Ospedale Policlinico San Martino and University of Genoa, Genova, Italy</p>
+        <div>
+          <div style="float: left;width: 45%; text-align: right">phone: <a href="tel:+390105557360">+39 010 555 7360</a></div>
+          <div style="float: left;width: 5%;">~</div>
+          <div style="float: left;width: 45%; text-align: left">email: <a href="mailto:matteo.bauckneht@unige.it?subject=BUMP risk score calculator">matteo.bauckneht@unige.it</a></div>
+        </div>
+      </footer>'),
 )
