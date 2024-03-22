@@ -24,6 +24,18 @@ fluidPage(id = 'main',
        </p><br>'
   ),
   
+  HTML("<style>
+    .circle {
+      width: 230px;
+      height: 230px;
+      border-radius: 50%;
+      margin:0;
+      display: flex;  /* Use flexbox for centering text */
+      justify-content: center;  /* Center text horizontally */
+      align-items: center;  /* Center text vertically */
+    }
+    </style>"),
+  
   # Sidebar with a slider input for number of bins
   sidebarLayout(
     sidebarPanel(id = 'form', width = 5,
@@ -70,13 +82,29 @@ fluidPage(id = 'main',
     ),
     
     # Show a plot of the generated distribution
-    mainPanel(width = 7, htmlOutput("outText"))
+    mainPanel(width = 7,
+
+          htmlOutput("outText"),
+          
+          HTML(
+            "</br>
+               <p style = 'color: #666; text-align:center;'>
+               <i>This model is provided exclusively for educational, training,
+               and informational purposes.<br>It is not intended to support medical
+               decision-making or to provide medical or diagnostic services.</i>
+               </p>"
+          )
+    
+          )
+        
+ 
+
   ),
   HTML('
       <footer style = "text-align: center; background-color: #fff; padding: 30px">
         <p>For information, refer to Matteo Bauckneht, MD, PhD, IRCCS Ospedale Policlinico San Martino and University of Genoa, Genova, Italy</p>
         <div>
-          <div style="float: left;width: 45%; text-align: right">phone: <a href="tel:+390105557360">+39 010 555 7360</a></div>
+          <div style="float: left;width: 45%; text-align: right">phone: <a href="tel:+390105554803">+39 010 555 4803</a></div>
           <div style="float: left;width: 5%;">~</div>
           <div style="float: left;width: 45%; text-align: left">email: <a href="mailto:matteo.bauckneht@unige.it?subject=BUMP risk score calculator">matteo.bauckneht@unige.it</a></div>
         </div>

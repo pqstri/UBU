@@ -19,7 +19,7 @@ function(input, output, session) {
       req(input$ADT)
       req(input$HUmean)
       req(input$SUVmax)
-      lp <- -4.660246 + 1.690656 * as.numeric(input$ADT) + 0.0043016 * input$HUmean + 0.317027 * input$SUVmax 
+      lp <- -4.660246 + 1.690656 * as.numeric(input$ADT) + 0.0043016 * input$HUmean + 0.317027 * input$SUVmax
       p <- 1/(1+exp(-lp))
       return(p)
     })
@@ -41,23 +41,23 @@ function(input, output, session) {
              "(0.5,0.75]" = "#f0ad30",
              "(0.75, Inf]" = "#f04630")
       HTML(sprintf("The estimated risk of true skeletal metastases for a prostate cancer patients exhibiting [18F]PSMA-1007 bone focal uptakes with an 
-              HUmean of %.1f and a SUVmax of %s is:</br>
-              <div style='text-align: center; margin:10px;'><h1 style='background-color:%s; font-size:80px'>%.1f%%</h1></div>
-              </br></br>
-                   <p style = 'text-align: center; color: #666'><i>This model is provided exclusively for educational, training, and informational purposes.<br>It is not intended to support medical decision-making or to provide medical or diagnostic services.</i></p>", 
+              HUmean of %.1f and a SUVmax of %s is:</br></br></br>
+              <div class='circle', style='background-color:%s; margin: auto;'>
+                   <h1 style='font-size:60px;margin:0;'>%.1f%%</h1></div>
+              </br>", 
               input$HUmean,
               input$SUVmax,
               est.col,
               est*100))
     })
     
-    observe({
-      if(input$ADT!='' & !is.na(input$HUmean) & !is.na(input$SUVmax)) {
-        shinyjs::enable(id = "run")
-      } else {
-        shinyjs::disable(id = "run")
-      }
-    })
+    # observe({
+    #   if(input$ADT!='' & !is.na(input$HUmean) & !is.na(input$SUVmax)) {
+    #     shinyjs::enable(id = "run")
+    #   } else {
+    #     shinyjs::disable(id = "run")
+    #   }
+    # })
 
     # force inrange values
     observeEvent(input$HUmean, {
