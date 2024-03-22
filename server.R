@@ -35,11 +35,12 @@ function(input, output, session) {
 
     output$outText <- renderUI({
       est <- estimate()
-      est.col <- switch(as.character(cut(est, breaks = c(-Inf, 0.25, 0.50, 0.75, Inf))),
-             "(-Inf,0.25]" = "#1fde18", 
-             "(0.25,0.5]" = "#eded47",
-             "(0.5,0.75]" = "#f0ad30",
-             "(0.75, Inf]" = "#f04630")
+      # est.col <- switch(as.character(cut(est, breaks = c(-Inf, 0.25, 0.50, 0.75, Inf))),
+      #        "(-Inf,0.25]" = "#59f553", 
+      #        "(0.25,0.5]" = "#eded47",
+      #        "(0.5,0.75]" = "#f0ad30",
+      #        "(0.75, Inf]" = "#f7634f")
+      est.col <- rainbow(1000)[301-round(est*300)]
       HTML(sprintf("The estimated risk of true skeletal metastases for a prostate cancer patients exhibiting [18F]PSMA-1007 bone focal uptakes with an 
               HUmean of %.1f and a SUVmax of %s is:</br></br></br>
               <div class='circle', style='background-color:%s; margin: auto;'>
